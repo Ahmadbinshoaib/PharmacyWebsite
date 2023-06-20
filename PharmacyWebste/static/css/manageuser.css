@@ -1,0 +1,30 @@
+
+ border {
+        border: 1px solid black;
+    }
+
+    .breadcrumb-item {
+        font-size: small;
+    }
+
+    .nav_border {
+        border: 1px solid gray;
+        border-radius: 5px;
+        padding: 3px;
+        padding-left: 10px;
+        padding-right: 10px;
+
+    }
+
+ .pagination {
+    font-size: small;
+    border-color: gray;
+  }
+
+  .page-link{
+   font-size: smaller;
+  }
+
+
+
+

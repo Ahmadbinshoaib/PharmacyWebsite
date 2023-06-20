@@ -1,0 +1,73 @@
+.add_button{
+color: white;
+                background-color: rgb(104, 169, 231);
+                border: none;
+                font-size: 13px;
+                padding-right: 28px;
+}
+
+.add_button:hover{
+     background-color: rgb(97, 171, 240);
+
+}
+
+.print_button{
+color: white;
+               background-color: green;
+                border: none;
+                font-size: 13px;
+                padding-right: 28px;
+}
+
+.print_button:hover{
+     background-color: rgb(5, 121, 5)
+
+}
+
+.table_buttone{
+color: green;
+              
+                border: none;
+                font-size: 13px;
+
+
+}
+.table_buttone:hover{
+color: green;
+
+                border: none;
+                font-size: 13px;
+
+
+}
+.table_buttone:active{
+color: green;
+
+                border: none;
+                font-size: 13px;
+
+
+}
+
+.table_buttond{
+color: red;
+
+                border: none;
+                font-size: 13px;
+
+
+}
+.table_buttond:hover{
+color: red;
+                border: none;
+                font-size: 13px;
+
+
+}
+.table_buttond:active{
+color: red;
+                border: none;
+                font-size: 13px;
+
+
+}
