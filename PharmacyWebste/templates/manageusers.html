@@ -47,12 +47,26 @@
 
 
     <!--Alert-->
-    <div class="row border" style="padding-top: 10px; ">
+    {% if status == "done" %}
+    <div class="row border" style="padding-top: 10px;">
         <div class="alert alert-success"
-            style="padding-top: 8px; padding-bottom: 8px; font-size: small; margin-bottom: 0px;" role="alert ">
+            style="padding-top: 8px; padding-bottom: 8px; font-size: small; margin-bottom: 0px;" role="alert">
             User has been added successfully!
         </div>
     </div>
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {% endwith %}
 
 
 
@@ -130,8 +144,8 @@
         <table class="table table-hover" style="font-size: small;">
             <thead>
                 <tr class="table-light">
-                    <th scope="col">Id</th>
-                    <th scope="col">Person Id</th>
+                    <th scope="col" style="display: none;">Id</th>
+                    <th scope="col" style="display: none;">Person Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Contact</th>
                     <th scope="col">Email</th>
@@ -148,9 +162,9 @@
             <tbody>
                 {% for row in data %}
                 <tr>
-                    <td>{{ row[0] }}</td>
-                    <td>{{ row[1] }}</td>
-                    <td>{{ row[2] }}</td>
+                    <td style="display: none;">{{ row[0] }}</td>
+                    <td style="display: none;">{{ row[1] }}</td>
+                    <td style="width: 105px;">{{ row[2] }}</td>
                     <td>{{ row[3] }}</td>
                     <td>{{ row[4] }}</td>
                     <td>{{ row[5] }}</td>
@@ -215,19 +229,270 @@
                 <!-- Modal Body -->
                 <div class="modal-body">
                     <!-- Add your form here -->
-                    <form>
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter username">
+
+                    <form class="row g-3 needs-validation" novalidate>
+
+                        <!--Name-->
+                        <div class="col-md-4">
+                            <label for="namevalidation" class="label" style=" " class="form-label">User Name</label>
+                            <input style="height: 30px; font-size: small;" type="text" class="form-control"
+                                id="namevalidation" name="name" placeholder="Name" required>
+                            <div class="invalid-feedback" style="font-size: x-small;">
+                                Please enter a valid name between 5 and 25 characters long without numbers.
+                            </div>
+                            <div class="valid-feedback" style="font-size: x-small;">
+                                Looks good!
+                            </div>
                         </div>
-                        <!-- Add more form controls as needed -->
+
+                        <!--Contact-->
+                        <div class="col-md-4">
+                            <label for="contactvalidation" class="form-label label">Contact</label>
+
+                            <input style="height: 30px; font-size: small;" type="number" class="form-control"
+                                id="contactvalidation" value="Otto" placeholder="+920000000000" name="contact" required>
+
+                            <div class="invalid-feedback" style="font-size: x-small;">
+                                Please enter a valid contact upto 11 to 15 characters long.
+                            </div>
+                            <div class="valid-feedback" style="font-size: x-small;">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <!--Email-->
+                        <div class="col-md-4">
+                            <label for="emailvalidation" class="form-label label">E-mail</label>
+
+                            <input style="height: 30px; font-size: small;" type="email" class="form-control"
+                                id="emailvalidation" value="" placeholder="someone@medicare.com" name="email" required>
+
+                            <div class="invalid-feedback" style="font-size: x-small;">
+                                Please enter a valid email
+                            </div>
+                            <div class="valid-feedback" style="font-size: x-small;">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <!--Gender-->
+                        <div class="col-md-4">
+                            <label for="gendervalidation" class="form-label label">Gender</label>
+                            <select style="height: 30px; font-size: small; color: rgb(118, 116, 116);"
+                                class="form-select" id="gendervalidation" name="gender" required>
+                                <option selected disabled value="">Choose...</option>
+                                <option value=1>Male</option>
+                                <option value=2>Female</option>
+                                <option value=3>Others</option>
+                            </select>
+                            <div class="invalid-feedback" style="font-size: x-small;">
+                                Please select a valid gender.
+                            </div>
+                        </div>
+
+                        <!-- CNIC-->
+
+                        <div class="col-md-4">
+                            <label for="cnicvalidation" class="form-label label">CNIC</label>
+
+                            <input style="height: 30px; font-size: small;" type="number" class="form-control"
+                                id="cnicvalidation" value="Otto" placeholder="3520265462803" name="cnic" required>
+
+                            <div class="invalid-feedback" style="font-size: x-small;">
+                                Please enter a valid cnic upto 13 characters long.
+                            </div>
+                            <div class="valid-feedback" style="font-size: x-small;">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <!-- UserRole-->
+                        <div class="col-md-4">
+                            <label for="userrolevalidation" class="form-label label">User Role</label>
+                            <select style="height: 30px; font-size: small; color: rgb(118, 116, 116);"
+                                class="form-select" id="userrolevalidation" name="userrole" required>
+                                <option selected disabled value="">Choose...</option>
+                                <option value=4>Admin</option>
+                                <option value=5>Pharmacist</option>
+                                <option value=6>Cashier</option>
+                            </select>
+                            <div class="invalid-feedback" style="font-size: x-small;">
+                                Please select a valid user role.
+                            </div>
+                        </div>
+
+                        <!--Username-->
+                        <div class="col-md-4">
+                            <label for="usernamevalidation" class="label" style=" " class="form-label">Username</label>
+                            <input style="height: 30px; font-size: small;" type="text" class="form-control"
+                                id="usernamevalidation" name="username" placeholder="medicare123" required>
+                            <div class="invalid-feedback" style="font-size: x-small;">
+                                Please enter a valid username that do not contain any special characters.
+                            </div>
+                            <div class="valid-feedback" style="font-size: x-small;">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <!--Password-->
+                        <div class="col-md-4">
+                            <label for="passwordvalidation" class="label" style=" " class="form-label">Password</label>
+                            <input style="height: 30px; font-size: small;" type="password" class="form-control"
+                                id="passwordvalidation" name="password" placeholder="*********" required>
+                            <div class="invalid-feedback" style="font-size: x-small;">
+                                Please enter a valid password that at least 8 characters long.
+                            </div>
+                            <div class="valid-feedback" style="font-size: x-small;">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <!--Salary-->
+                        <div class="col-md-4">
+                            <label for="salaryvalidation" class="form-label label">User Salary</label>
+
+                            <input style="height: 30px; font-size: small;" type="number" class="form-control"
+                                id="salaryvalidation" value="Otto" placeholder="..." name="salary" required>
+
+                            <div class="invalid-feedback" style="font-size: x-small;">
+                                Please enter valid salary
+                            </div>
+                            <div class="valid-feedback" style="font-size: x-small;">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <!--Submit-->
+                        <div class="row" style="margin-top: 15px;">
+                            <div class="col-6 d-flex justify-content-end">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                            <div class="col-6" style="padding-left: 0px;">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+
                     </form>
+
+                    <!--
+                    <form class="needs-validation" action="/addUser" method="post">
+                        <div class="row gx-3 gy-2 align-items-center">
+                            {{ form.csrf_token }}
+                            <div class="form-group">
+                                {{ form.name.label }} {{ form.name(class="form-control" ~ ' is-invalid' if
+                                form.name.errors) }}
+                                {% for error in form.name.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+
+                           
+                            <div class="col-sm-4">
+                                <label class="visually-hidden" for="specificSizeInputName">Name</label>
+                                <input style="height: 30px; font-size: small;" type="text" class="form-control"
+                                    id="specificSizeInputName" placeholder="Name" name="name" onchange="validateName()"
+                                    required>
+                            </div>
+                           
+
+                            <div class="col-sm-4">
+                                <label class="visually-hidden" for="validationCustom01">Name</label>
+                                <input style="height: 30px; font-size: small;" type="text" class="form-control"
+                                    id="validationCustom01" placeholder="Name" name="name" oninput="validateName()"
+                                    required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="visually-hidden" for="specificSizeInputName">Contact</label>
+                                <input style="font-size: small;" type="number" class="form-control form-control-sm"
+                                    id="specificSizeInputName" placeholder="+920000000000" name="contact" required>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="visually-hidden" for="specificSizeInputName">E-mail</label>
+                                <input style="height: 30px; font-size: small;" type="email" class="form-control"
+                                    id="specificSizeInputName" placeholder="E-mail" name="email" required>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+                                <select style="height: 30px; font-size: small; color: rgb(118, 116, 116);"
+                                    class="form-select form-control-sm" id="specificSizeSelect" name="gender" required>
+                                    <option selected>Gender...</option>
+                                    <option value=1>1</option>
+                                    <option value=2>2</option>
+                                    <option value=3>3</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="visually-hidden" for="specificSizeInputName">CNIC</label>
+                                <input style="font-size: small;" type="number" class="form-control form-control-sm"
+                                    id="specificSizeInputName" placeholder="CNIC" name="cnic" required>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+                                <select style="height: 30px; font-size: small; color: rgb(118, 116, 116);"
+                                    class="form-select form-control-sm" id="specificSizeSelect" name="userrole"
+                                    required>
+                                    <option selected>User Role...</option>
+                                    <option value=4>4</option>
+                                    <option value=5>5</option>
+                                    <option value=6>6</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="visually-hidden" for="specificSizeInputGroupUsername">Username</label>
+                                <div class="input-group">
+                                    <div class="input-group-text input-group-text-sm " style="height: 32px;">@</div>
+                                    <input type="text" class="form-control form-control-sm" style="height: 12px;"
+                                        id="specificSizeInputGroupUsername" placeholder="Username" name="username"
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="visually-hidden" for="specificSizeInputGroupUsername">Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-text input-group-text-sm " style="height: 32px;">#</div>
+                                    <input type="text" class="form-control form-control-sm" style="height: 12px;"
+                                        id="specificSizeInputGroupUsername" placeholder="Password" name="password"
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="visually-hidden" for="specificSizeInputName">Salary</label>
+                                <input style="font-size: small;" type="number" class="form-control form-control-sm"
+                                    id="specificSizeInputName" placeholder="Salary" name="salary" required>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 15px;">
+                            <div class="col-6 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                            <div class="col-6" style="padding-left: 0px;">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+
+                    </form>
+                -->
+
                 </div>
 
                 <!-- Modal Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
                 </div>
 
             </div>
@@ -237,5 +502,163 @@
 
 
 
+
 </div>
+
+<script>
+    (function () {
+        'use strict'
+
+        // Fetch the form element
+        var form = document.getElementById('namevalidation').closest('form');
+        var form = document.getElementById('contactvalidation').closest('form');
+        var form = document.getElementById('emailvalidation').closest('form');
+        var form = document.getElementById('cnicvalidation').closest('form');
+        var form = document.getElementById('usernamevalidation').closest('form');
+        var form = document.getElementById('passwordvalidation').closest('form');
+
+        // Add a custom validation function
+        function validateFirstName() {
+            var firstNameInput = document.getElementById('namevalidation');
+            var firstName = firstNameInput.value.trim();
+
+            // Perform validation logic
+            if (!/^[a-zA-Z]{5,25}$/.test(firstName)) {
+                firstNameInput.classList.add('is-invalid');
+                return false;
+            }
+
+            firstNameInput.classList.remove('is-invalid');
+            return true;
+        }
+        //Contact Validation
+        function validateContact() {
+            var contactInput = document.getElementById('contactvalidation');
+            var contact = contactInput.value.trim();
+
+            // Perform validation logic
+            if (contact.length < 11 || contact.length > 15) {
+                contactInput.classList.add('is-invalid');
+                return false;
+            }
+
+            contactInput.classList.remove('is-invalid');
+            return true;
+        }
+
+        //Email Validation
+        function validateEmail() {
+            var emailInput = document.getElementById('emailvalidation');
+            var email = emailInput.value.trim();
+
+            // Perform validation logic
+            // This is a basic email validation regex pattern, but it's not foolproof.
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                emailInput.classList.add('is-invalid');
+                return false;
+            }
+
+            emailInput.classList.remove('is-invalid');
+            return true;
+        }
+        //CNIC Validator
+        function validateCNIC() {
+            var cnicInput = document.getElementById('cnicvalidation');
+            var cnic = cnicInput.value.trim();
+
+            // Perform validation logic
+            if (cnic.length !== 13) {
+                cnicInput.classList.add('is-invalid');
+                return false;
+            }
+
+            cnicInput.classList.remove('is-invalid');
+            return true;
+        }
+
+        //Username validation
+        function validateUsername() {
+            var usernameInput = document.getElementById('usernamevalidation');
+            var username = usernameInput.value.trim();
+
+            // Perform validation logic
+            var usernameRegex = /^[a-zA-Z0-9_.-]+$/;
+            if (!usernameRegex.test(username)) {
+                usernameInput.classList.add('is-invalid');
+                return false;
+            }
+
+            usernameInput.classList.remove('is-invalid');
+            return true;
+        }
+
+        //Password
+        function validatePassword() {
+            var passwordInput = document.getElementById('passwordvalidation');
+            var password = passwordInput.value;
+
+            // Perform validation logic
+            var lengthRegex = /.{8,}/;
+            var uppercaseRegex = /[A-Z]/;
+            var lowercaseRegex = /[a-z]/;
+            var numericRegex = /[0-9]/;
+            var specialCharRegex = /[-!@#$%^&*()_+|~=`{}[\]:";'<>?,./]/;
+
+            if (
+                !lengthRegex.test(password) ||
+                !uppercaseRegex.test(password) ||
+                !lowercaseRegex.test(password) ||
+                !numericRegex.test(password) ||
+                !specialCharRegex.test(password)
+            ) {
+                passwordInput.classList.add('is-invalid');
+                return false;
+            }
+
+            passwordInput.classList.remove('is-invalid');
+            return true;
+        }
+
+        // Submit event listener for the form
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity() || !validateFirstName() || !validateContact() || !validateEmail() || !validateCNIC() || !validateUsername() || !validatePassword()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            form.classList.add('was-validated');
+        }, false);
+
+        // Input event listener for the first name field
+        document.getElementById('namevalidation').addEventListener('input', function () {
+            validateFirstName();
+        });
+
+        document.getElementById('contactvalidation').addEventListener('input', function () {
+            validateContact();
+        });
+
+        document.getElementById('emailvalidation').addEventListener('input', function () {
+            validateEmail();
+        });
+
+        document.getElementById('cnicvalidation').addEventListener('input', function () {
+            validateCNIC();
+        });
+
+        document.getElementById('usernamevalidation').addEventListener('input', function () {
+            validateUsername();
+        });
+
+        document.getElementById('passwordvalidation').addEventListener('input', function () {
+            validatePassword();
+        });
+
+
+
+    })();
+</script>
+
+
 {% endblock %}
